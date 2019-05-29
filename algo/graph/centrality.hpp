@@ -4,6 +4,7 @@ using namespace std;
 
 template<class T> inline bool chmin(T &minval, const T &newval) { if (minval>newval) { minval=newval; return 1; } return 0; }
 
+
 // 近接中心性
 struct ClosenessCentrality {
     typedef pair<int,int> pii;
@@ -39,6 +40,8 @@ private:
         }
     }
 };
+
+
 
 // 媒介中心性
 struct BetweenessCentrality {
@@ -84,7 +87,6 @@ private:
         while(back[to]>=0){
             bc[to] += cnt; cnt++; to=back[to];
         } 
-        return path;
     }
 };
 
