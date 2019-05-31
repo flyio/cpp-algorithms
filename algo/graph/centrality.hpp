@@ -1,11 +1,10 @@
-// 有向グラフの中心性
+// Graph Centralities
 #include <bits/stdc++.h>
 using namespace std;
 
 template<class T> inline bool chmin(T &minval, const T &newval) { if (minval>newval) { minval=newval; return 1; } return 0; }
 
 
-// 近接中心性
 struct ClosenessCentrality {
     typedef pair<int,int> pii;
     typedef pii Edge;  // (cost, to)
@@ -43,18 +42,18 @@ private:
 
 
 
-// 媒介中心性
 struct BetweenessCentrality {
     typedef pair<int,int> pii;
     typedef pii Edge;  // (cost, to)
     vector<vector<Edge>> G; int V;
-    vector<int> d, back, bc; vector<bool> is_leaf;
-    BetweenessCentrality(int V) : G(V), V(V), d(V), back(V), is_leaf(V), bc(V,0) {}
+    vector<int> d, back, bc; vector<bool> is_leaf, visited;
+    BetweenessCentrality(int V) : G(V), V(V), d(V), back(V), is_leaf(V), visited(V), bc(V,0) {}
     void add_edge(int from, int to, int cost){ G[from].push_back({cost,to}); }
 
     void compute(){
         for(int u=0;u<V;++u){
             dijkstra(u, d, &back);
+            fill(visited.begin(), visited.end(), false);
             for(int v=0;v<V;++v){
                 if(is_leaf[v]) backward(v,back);
             }
@@ -85,6 +84,8 @@ private:
     void backward(int to, vector<int> &back){
         int cnt = 0;
         while(back[to]>=0){
+            if(visited[to]) break;
+            visited[to] = true;
             bc[to] += cnt; cnt++; to=back[to];
         } 
     }
