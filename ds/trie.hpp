@@ -6,20 +6,19 @@ struct trie {
     trie() : is_word(false) { children.fill(nullptr); };
     ~trie() { for(int i=0;i<sigma;++i){ if(children[i]) delete children[i]; } }
     template<class Iterator>
-    void add(Iterator begin, Iterator end){
-        if(begin==end) { this->is_word=true; return; }
+    trie<sigma>* add(Iterator begin, Iterator end){
+        if(begin==end) { this->is_word=true; return this; }
         if(!children[*begin]) children[*begin] = new trie;
-        children[*begin]->add(++begin, end);
-        return;
+        return children[*begin]->add(++begin, end);
     }
     template<class Iterator>
-    bool query(Iterator begin, Iterator end){
+    trie<sigma>* query(Iterator begin, Iterator end){
         auto ptr = this;
         while(begin!=end){
-            if(!ptr->children[*begin]) return false;
+            if(!ptr->children[*begin]) return nullptr;
             ptr = ptr->children[*begin++];
         }
-        return ptr->is_word;
+        return ptr;
     }
 
 };
