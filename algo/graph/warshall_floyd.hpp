@@ -11,11 +11,12 @@ void init_warshall_floyd(Matrix d, int V){
 }
 
 template <class Matrix>
-void warshall_floyd(Matrix d, int V){
+void warshall_floyd(Matrix &d, int V){
     // [input] d: 隣接行列 (size: V x V) d[i][j] は (i,j) のコスト
     //         (エッジがない場合「無限大」にする．オーバーフローを避けるため
     //          numeric_limits<int>::max() を使ってはいけない)
     // [output] d[i][j] が (i,j) の最短経路長となる
+    for(int k=0;k<V;++k) d[k][k] = 0;  // for safety
     for(int k=0;k<V;++k)
         for(int i=0;i<V;++i)
             for(int j=0;j<V;++j)
