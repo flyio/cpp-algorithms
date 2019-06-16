@@ -15,14 +15,14 @@ struct RMQ {
     k += n-1; a[k] = val;
     while(k>0){ k = (k-1)/2; a[k]=min(a[2*k+1], a[2*k+2]); }  // going up towards the root;
   }
-  // find minimum within a[i,j)
-  T query(int i, int j){ return query(i,j,0,0,n); }
-  T query(int i, int j, int k, int l, int r){
-    if(r<=i || j<=l) return themax;
-    if(i<=l && r<=j) return a[k];
+  // find minimum within a[i,j) with its position
+  pair<T,int> query(int i, int j){ return query(i,j,0,0,n); }
+  pair<T,int> query(int i, int j, int k, int l, int r){
+    if(r<=i || j<=l) return {themax, -1};
+    if(i<=l && r<=j) return {a[k], k};
     else {
-      T vl = query(i,j,2*k+1,l,(l+r)/2);
-      T vr = query(i,j,2*k+2,(l+r)/2,r);
+      auto vl = query(i,j,2*k+1,l,(l+r)/2);
+      auto vr = query(i,j,2*k+2,(l+r)/2,r);
       return min(vl,vr);
     }
   }
