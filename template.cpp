@@ -71,5 +71,7 @@ inline  ll IN() {ll x; cin >> x; return x;}  // read ll from cin
 
 int main(){
   cin.tie(0); ios::sync_with_stdio(false);    // Magic for faster cin
+  // mint::init(1e6);  // if mint needed
+
   return 0;
 }
