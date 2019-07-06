@@ -4,7 +4,7 @@ using namespace std;
 
 struct SegTree {
   // なるべく汎用的になるように書いたセグ木のクラス
-  // * 使う際には update と query メソッドを実装する
+  // * このサンプルではとりあえず RMQ を実装している．自分で使う際には update と query メソッドを実装する
   // * 配列の添字は0-basedを仮定 / Interval は半開区間 [l,r) としている（問題の設定に注意!!）
   // * Interval クラスはポインタレスな二分木のノードに対応していて，子ノード，親ノードへ自由に行き来できる
 
@@ -73,7 +73,7 @@ protected:
   T& operator[](Interval &lr) { return dat[lr.node_id]; }
   // 木ノードの移動関連 (通常は Interval クラスを使えば十分なので使わない)
   inline int parent(int node) const { return (node-1)/2; }
-  inline int left_child(int node) const { return 2*node+1; }  // おアノード
+  inline int left_child(int node) const { return 2*node+1; }
   inline int right_child(int node) const { return 2*node+2; }
   inline int is_root(int node) const { return node==0; }
 
