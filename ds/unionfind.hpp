@@ -19,6 +19,7 @@ struct UnionFind {
       if(rank[x]==rank[y]) rank[x]++;
     }
   }
+  int count_groups() const { int cnt = 0; for(int x=0; x<par.size(); ++x) if(x==par[x]) cnt++; return cnt; }
 };
 
 // ポテンシャル Union-Find木
