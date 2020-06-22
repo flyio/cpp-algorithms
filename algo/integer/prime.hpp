@@ -36,19 +36,46 @@ INT_T gcd(INT_T a, INT_T b) {
   return b;
 }
 
-// 素因数分解
+// 最小公倍数
 template <class INT_T>
-std::map<INT_T, int> prime_factor(INT_T n){
-  std::map<INT_T,int> ret;  // prime => count
-  for(int i=2;i*i<=n;++i){
-    while(n%i==0) {
-        ret[i]++;
-        n /= i;
+INT_T lcm(INT_T a, INT_T b) {
+  if(a < b) return lcm(b, a);
+  INT_T r; INT_T b_ = b;
+  while ((r=a%b)) { a = b; b = r; }
+  return a/r*b;
+}
+
+// 素因数分解 (戻り値: (prime, count) のベクトル)
+vector<pair<ll,ll>> prime_factor(ll num){
+  vector<pair<ll,ll>> vpl;
+  ll cnt;
+  for(ll i=2;i*i<=num;i++){
+    if(num%i!=0) continue;
+    cnt=0;
+    while(num%i==0){
+      num/=i;
+      cnt++;
+    }
+    vpl.push_back(mp(i,cnt));
+  }
+  if(num>1) vpl.push_back(make_pair(num,1));
+  return vpl;
+}
+
+
+// 約数を全列挙する
+template <class INT_T>
+vector<INT_T> enum_divisors(INT_T n){
+  vector<INT_T> div;
+  for(int i=1;i<(int)sqrt(n)+1;i++){
+    if(n%i==0){
+      div.push_back(i);
+      if(i!=(n/i)) div.push_back(n/i);
     }
   }
-  if(n!=1) ret[n]=1;
-  return ret;
+  return div;
 }
+
 
 // 整数のべき乗
 long long pow_int(int x, int n){
