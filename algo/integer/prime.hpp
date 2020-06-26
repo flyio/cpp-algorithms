@@ -88,3 +88,19 @@ long long pow_int(int x, int n){
   if(n%2) return x * tmp * tmp;
   return tmp * tmp;
 }
+
+// エラトステネスの篩 (N以下の素数の列挙)
+std::vector<int> enum_primes( const int N ){
+  std::vector<bool> is_prime( N + 1 );
+  for(int i=0; i<=N; i++)
+    is_prime[ i ] = true;
+  std::vector<int> P;
+  for(int i=2; i<=N; i++){
+    if( is_prime[i] ){
+      for( int j=2*i; j<=N; j+=i )
+        is_prime[ j ] = false;
+      P.emplace_back(i);
+    }
+  }
+  return P;
+}
