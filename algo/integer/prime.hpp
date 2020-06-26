@@ -38,11 +38,14 @@ INT_T gcd(INT_T a, INT_T b) {
 
 // 最小公倍数
 template <class INT_T>
-INT_T lcm(INT_T a, INT_T b) {
-  if(a < b) return lcm(b, a);
-  INT_T r; INT_T b_ = b;
-  while ((r=a%b)) { a = b; b = r; }
-  return a/r*b;
+INT_T ___gcd(INT_T a, INT_T b){
+    if(a<b) swap(a,b);
+    if(a%b==0) return b;
+    return ___gcd(a%b,b);
+}
+template <class INT_T>
+INT_T lcm(INT_T a, INT_T b){
+    return a/___gcd(a,b)*b;
 }
 
 // 素因数分解 (戻り値: (prime, count) のベクトル)
