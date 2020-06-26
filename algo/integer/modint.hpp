@@ -28,12 +28,12 @@ struct ModInt {
     ModInt operator -- (int){ int ret = num; num = num == 0 ? M - 1 : num - 1; return ret; }
     ModInt operator ++ (){ return num = num == M + 1 ? 0 : num + 1; }
     ModInt operator -- (){ return num = num == 0 ? M - 1 : num - 1; }
-    template <class T> ModInt operator += (T n){ num += n; return num = num >= M ? num - M : num; }
-    template <class T> ModInt operator -= (T n){ num -= n; return num = num < 0 ? num + M : num; }
-    template <class T> ModInt operator *= (T n){ return num = (ll)num * n % M; }
-    template <class T> ModInt operator /= (T n){ return num = (ll)num * modInv(n) % M; }
-    template <class T> ModInt operator >>= (T n){ return num = num >> n; }
-    template <class T> ModInt operator <<= (T n){ return num = ((ll)num << n) % M; }
+    constexpr ModInt &operator += (ModInt n){ num += n.num; num = num >= M ? num - M : num; return (*this); }
+    constexpr ModInt &operator -= (ModInt n){ num -= n.num; num = num < 0 ? num + M : num; return (*this);}
+    constexpr ModInt &operator *= (ModInt n){ num = (ll)num * n % M; return (*this); }
+    constexpr ModInt &operator /= (ModInt n){ num = (ll)num * modInv(n) % M; return (*this); }
+    constexpr ModInt &operator >>= (ModInt n){ num = num >> n; return (*this); }
+    constexpr ModInt &operator <<= (ModInt n){ num = ((ll)num << n) % M; return (*this); }
     friend ModInt modPow(ModInt base, ModInt ex) {
         ModInt ret = 1;
         while(ex.num){
